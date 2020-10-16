@@ -1,0 +1,91 @@
+/** @format */
+
+///////////////// HEADER //////////////
+
+header {
+  background-color: #3282b8;
+  height: 300px;
+  width: auto;
+}
+
+///////////// UTILITIES /////////////////////
+
+body {
+  background-color: #0f4c75;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Roboto Mono", monospace;
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 0 30px 30px 30px;
+  padding-top: 40px;
+}
+
+h2 {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: #0f4c75;
+  padding: 10px;
+  text-align: center;
+}
+
+h3 {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 2.5rem;
+  color: #2a7886;
+}
+
+p {
+  font-family: "Roboto Mono", monospace;
+  color: #0f4c75;
+  font-size: 16px;
+  font-style: bold;
+}
+
+.infoplace p {
+  font-family: "Roboto Mono", monospace;
+  margin-top: 20px;
+}
+
+.searchpart label {
+  color: #0f4c75;
+  font-family: "Roboto Mono", monospace;
+  font-style: bold;
+  font-size: 1.5rem;
+  border-radius: 10px;
+}
+
+input {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.8rem;
+}
+
+.hide {
+  display: none;
+}
+
+////////// COUNTAINER SEARCH ///////
+
+.container-search {
+  background-color: #f1f3f4;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 1200px) {
+  h1 {
+    font-size: 1.5rem;
+    padding: 5px;
+  }
+
+  h2 {
+    font-size: 3rem;
+    padding: 10px;
+  }
+  .searchpart label {
+    font-size: 1.2rem;
+  }
+}
