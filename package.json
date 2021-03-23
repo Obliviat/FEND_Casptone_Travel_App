@@ -5,7 +5,7 @@
 	"main": "webpack.config.js",
 	"scripts": {
 		"test": "test",
-		"start": "node src/server/server.js",
+		"start": "node src/server/index.js",
 		"build-prod": "webpack --config webpack.prod.js",
 		"build-dev": "webpack serve  --config webpack.dev.js --open"
 	},

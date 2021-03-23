@@ -1,10 +1,7 @@
 const resultWeather = document.querySelector('#resultWeather');
 const formWeather = document.querySelector('#formWeather');
-
-
 const result = document.querySelector('#result');
 const paginacionDiv = document.querySelector('#paginacion');
-
 const recordsPerPage = 5;
 let totalPages;
 let iterador;

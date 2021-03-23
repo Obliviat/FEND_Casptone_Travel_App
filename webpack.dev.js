@@ -1,6 +1,6 @@
-const path = require("path")
-const webpack = require("webpack")
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require("path");//installed via npm
+const webpack = require("webpack"); //to access build-in plugins
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
