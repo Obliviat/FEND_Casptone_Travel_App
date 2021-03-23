@@ -5,7 +5,7 @@ const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
 const paginacionDiv = document.querySelector('#paginacion');
 
-const recordsPerPage = 12;
+const recordsPerPage = 5;
 let totalPages;
 let iterador;
 let actualPage = 1;
@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
   formWeather.addEventListener('submit', validateForm);
 })
 
-
+//Alert of validation 
 export function showAlert(message) {
   console.log(message)
   //Create alert
@@ -36,8 +36,7 @@ export function showAlert(message) {
   }
 }
 
-////////////////////////////////////////////////////////////
-
+//Here we will validate the information entered
 export function validateForm(e) {
   e.preventDefault();
   console.log('Form validating...')
@@ -59,8 +58,6 @@ export function validateForm(e) {
 
 }
 
-////////////////////////////////////////////////////////////
-
 // GeonameAPI call //
 export function geoNamesAPI(city) {
   const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
@@ -75,8 +72,6 @@ export function geoNamesAPI(city) {
       ConsultApiWeather(data)
     })
 }
-
-/////////////////////////////////////////
 
 // WeatherbitAPI call //
 export function ConsultApiWeather(data) {
@@ -98,8 +93,6 @@ export function ConsultApiWeather(data) {
     })
 
 }
-
-/////////////////////////////////////////////////
 
 export function showWeather(data) {
 
@@ -130,7 +123,6 @@ export function showWeather(data) {
 
 }
 
-/////////////////////////////////////////////////
 
 // PixaBay call //
 export async function searchImage() {
