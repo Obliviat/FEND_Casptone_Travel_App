@@ -21,22 +21,24 @@
 		<div class=" bg-contiene bg-cover bg-center h-full" style="background-image: url('/src/client/image/banner.jpg')">
 		<h1>Time of Booking</h1>
 		</div>
+		<div class="underHeader">
 		<h2>Plan the perfect route, travel to your destination.</h2>
 		<i class="fab fa-avianex text-white text-5xl pl-5 pt-4"></i>
 		<i class="far fa-calendar-check text-white text-5xl ml-8"></i>
 		<i class="fas fa-cloud-sun-rain text-white text-5xl ml-8"></i>
 		<i class="fas fa-bed text-white text-5xl ml-8"></i>
+	</div>
 	</header>
 
 	<form id="formWeather" class="" action="#" method="POST">
 
 		<div class="flex flex-col m-12 pt-32">
 
-			<section class="searchpart min-w-full leading-10 bg-white p-8 m-4 rounded-2xl">
+			<section class="searchpart mx-auto leading-10 bg-gray-100 p-8 m-4 rounded-2xl">
 				<h3>Find Your Next Adventure</h3>
-				<h4>Plan your trip and organize your travel itinerary by using this powerful tool. You can select a destination and check the weather forecast within 16 days. This trip planner also allow you to find interesting places you can visit and explore.</h4>
+				<h4>Plan your trip .</h4>
 				<label>Where you gonna travel?</label>
-				<input class=" ml-6" id="city" type="text" value="" name="city" placeholder="City/Country" /><br />
+				<input class=" ml-6 mb-3" id="city" type="text" value="" name="city" placeholder="City/Country" /><br />
 
 				<label>Leaving Date</label>
 				<input class="ml-12 " id="leaving" type="date" value="" placeholder="date" name="date" /><br/>
@@ -56,7 +58,7 @@
 	</form>
 
 		<div class="container mx-auto">
-			<div id="resultWeather" class="container  px-4"></div>
+			<div id="resultWeather" class="container px-4"></div>
 			<div id="result" class="inline-grid grid-cols-3 gap-1"></div>
 			<div id="paginacion" class="container mx-auto mb-4  text-center flex flex-wrap justify-center"></div>
 		</div>

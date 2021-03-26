@@ -2,6 +2,7 @@ const resultWeather = document.querySelector('#resultWeather');
 const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
 const paginacionDiv = document.querySelector('#paginacion');
+
 const recordsPerPage = 100;
 let totalPages;
 let iterador;
@@ -16,7 +17,6 @@ export function showAlert(message) {
   console.log(message)
   //Create alert
   const alertExists = document.querySelector('.bg-red-100');
-
   if (!alertExists) {
     const alert = document.createElement('div');
     alert.classList.add('bg-red-100', 'border-red-400', 'text-red-700', 'px-4', 'py-3', 'rounded', 'max-w-md', 'mx-auto', 'mt-6', 'text-center');
@@ -46,24 +46,19 @@ export function validateForm(e) {
   if (city === '' || firstDay === '' || lastDay === '' || search === '') {
     //Error
     showAlert('Fill out all the fields');
-
     return;
   }
   //Consult API
   searchImage();
   geoNamesAPI(city);
-
 }
-// http://api.geonames.org/postalCodeSearchJSON?postalcode=
-// http://api.geonames.org/searchJSON?q=
-// &maxRows=10&username=
+
 // GeonameAPI call //
 export function geoNamesAPI(city) {
   const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
   const appKeyGeonames = `joanna`;
   const compleUrlGeo = baseURLGeonames + city + '&maxRows=1&username=' + appKeyGeonames
-  console.log(compleUrlGeo);
-
+  // console.log(compleUrlGeo);
   fetch(compleUrlGeo)
     .then(response => response.json())
     .then(data => {
@@ -72,50 +67,38 @@ export function geoNamesAPI(city) {
     })
 }
 
-// http://api.weatherbit.io/v2.0/forecast/daily?
-
 // WeatherbitAPI call //
 export function ConsultApiWeather(data) {
   const latitude = data.geonames[0].lat;
   const longitude = data.geonames[0].lng;
   const weatherKey = 'b55790535efc444b9adc2f8c067f4aa6';
   const weatherUrl = `https://api.weatherbit.io/v2.0/current?`;
-
   const compleUrlWe = weatherUrl + 'lat=' + latitude + '&lon=' + longitude + '&key=' + weatherKey
-
-  console.log(compleUrlWe);
-
+  // console.log(compleUrlWe);
   fetch(compleUrlWe)
     .then(response => response.json())
     .then(resultWeather => {
       console.log(resultWeather, "apiweather");
-
       showWeather(resultWeather);
     })
-
 }
 
 export function showWeather(data) {
-
   const weather = data.data
-
-  console.log(data, weather);
-
+  // console.log(data, weather);
   while (resultWeather.firstChild) {
     resultWeather.removeChild(resultWeather.firstChild);
   }
-
   weather.forEach(pronostico => {
     const { ob_time, city_name, timezone, sunrise, sunset, temp, weather, rh } = pronostico;
     const Fahrenheit = temp + 32.00;
-
     resultWeather.innerHTML += `
-    <div class=" p-2 mx-auto bg-gray-200 border-2 rounded-md"
+    <div class=" p-2 mx-auto bg-gray-200 border-2 rounded-md">
    
-    <p class="text-lg align-baseline">Date: ${ob_time}</p>
-    <p class="text-lg align-baseline">City: ${city_name}</p>
-    <p class="text-lg align-baseline">Time Zone: ${timezone}</p>
-    <p class="text-lg align-baseline">${weather.description}</p>
+    <p class="pl-4 text-lg align-baseline">Date: ${ob_time}</p>
+    <p class="pl-4 text-lg align-baseline">City: ${city_name}</p>
+    <p class="pl-4 text-lg align-baseline">Time Zone: ${timezone}</p>
+    <p class="pl-4 text-lg align-baseline">${weather.description}</p>
 
     <div class="grid gap-4 grid-cols-2 py-4">
     

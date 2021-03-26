@@ -10,10 +10,6 @@ const cors = require('cors');
 const app = express();
 
 
-// app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser.json());
-// app.use(cors());
-
 //tell the server what folder to use
 app.use(express.static('dist'));
 
@@ -34,3 +30,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var textapi = new WeatherApi({
+    application_id: process.env.API_ID,
+    application_key: process.env.API_KEY
+});
