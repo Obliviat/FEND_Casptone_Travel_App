@@ -106,26 +106,40 @@ export function showWeather(data) {
   }
 
   weather.forEach(pronostico => {
-    const { ob_time, city_name, timezone, sunrise, sunset, app_temp, weather, rh, wind_spd } = pronostico;
-  
+    const { ob_time, city_name, timezone, sunrise, sunset, temp, weather, rh } = pronostico;
+    const Fahrenheit = temp + 32.00;
+
     resultWeather.innerHTML += `
-    <div class=" p-2 bg-gray-200 border-2 rounded-md"
-    <p class="text-lg text-white">Date: ${ob_time}</p>
-    <p class="">City: ${city_name}</p>
-    <p class="">Time Zone: ${timezone}</p>
-    <p class=""><i class="fas fa-sun text-4xl p-4"></i>${sunrise} a.m</p>
-    <p class=""><i class="fas fa-moon text-4xl p-4"></i>${sunset} p.m</p>
-    <p class=""><i class="fas fa-temperature-high text-4xl p-4"></i>${app_temp} &#8451</p>
-    <p class=""><i class="fas fa-tint text-4xl p-4"></i>${rh} &#37</p>
-    <p class="">${weather.description}</p>
-    <p class="">Min Temperature: ${wind_spd}</p>
-    <div class=" mx-auto bg-white ">
-    <img src="../image/${weather.icon}" alt="hola">
+    <div class=" p-2 mx-auto bg-gray-200 border-2 rounded-md"
+   
+    <p class="text-lg align-baseline">Date: ${ob_time}</p>
+    <p class="text-lg align-baseline">City: ${city_name}</p>
+    <p class="text-lg align-baseline">Time Zone: ${timezone}</p>
+    <p class="text-lg align-baseline">${weather.description}</p>
+
+    <div class="grid gap-4 grid-cols-2 py-4">
+    
+    <div class="bg-white rounded-lg">
+    <p class="p-3 text-3xl">Sunrise</p>
+    <p class="text-lg align-baseline"><i class="fas fa-sun text-4xl p-4"></i>${sunrise} a.m</p>
     </div>
 
-    <p class="">Min Temperature: ${weather.icon}</p>
-   
-    
+    <div class="bg-white rounded-lg">
+    <p class="p-3 text-3xl">Sunset</p>
+    <p class="text-lg align-baseline"><i class="far fa-moon text-4xl p-4"></i>${sunset} p.m</p>
+    </div>
+
+    <div class="bg-white rounded-lg">
+    <p class="p-3 text-3xl">Humidity</p>
+    <p class="text-lg align-baseline"><i class="fas fa-tint text-4xl p-4"></i>${rh}&#37</p>
+    </div>
+
+    <div class="bg-white rounded-lg">
+    <p class="p-3 text-3xl">Feels Like</p>
+    <p class="text-lg align-baseline"><i class="fas fa-temperature-high text-4xl p-4"></i>${Fahrenheit} &#8457</p>
+    </div>
+
+    </div>
     <div/>
     `
   })
