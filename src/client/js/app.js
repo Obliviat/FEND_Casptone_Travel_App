@@ -56,12 +56,13 @@ export function validateForm(e) {
 }
 // http://api.geonames.org/postalCodeSearchJSON?postalcode=
 // http://api.geonames.org/searchJSON?q=
+// &maxRows=10&username=
 // GeonameAPI call //
 export function geoNamesAPI(city) {
-  const baseURLGeonames = 'http://api.geonames.org/postalCodeSearchJSON?postalcode=';
+  const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
   const appKeyGeonames = `joanna`;
-  const compleUrlGeo = baseURLGeonames + city + '&maxRows=10&username=' + appKeyGeonames
-  // console.log(compleUrlGeo);
+  const compleUrlGeo = baseURLGeonames + city + '&maxRows=1&username=' + appKeyGeonames
+  console.log(compleUrlGeo);
 
   fetch(compleUrlGeo)
     .then(response => response.json())
@@ -71,14 +72,16 @@ export function geoNamesAPI(city) {
     })
 }
 
+// http://api.weatherbit.io/v2.0/forecast/daily?
+
 // WeatherbitAPI call //
 export function ConsultApiWeather(data) {
-  const latitude = data.postalCodes[0].lat;
-  const longitude = data.postalCodes[0].lng;
+  const latitude = data.geonames[0].lat;
+  const longitude = data.geonames[0].lng;
   const weatherKey = 'b55790535efc444b9adc2f8c067f4aa6';
-  const weatherUrl = `http://api.weatherbit.io/v2.0/forecast/daily?`;
+  const weatherUrl = `https://api.weatherbit.io/v2.0/current?`;
 
-  const compleUrlWe = weatherUrl + 'lon=' + longitude + '&key=' + weatherKey + '&lat=' + latitude
+  const compleUrlWe = weatherUrl + 'lat=' + latitude + '&lon=' + longitude + '&key=' + weatherKey
 
   console.log(compleUrlWe);
 
@@ -103,16 +106,17 @@ export function showWeather(data) {
   }
 
   weather.forEach(pronostico => {
-    const { datetime, temp, weather, rh, wind_spd } = pronostico;
-
+    const { ob_time, city_name, timezone, sunrise, sunset, app_temp, weather, rh, wind_spd } = pronostico;
+  
     resultWeather.innerHTML += `
-    <div class=" p-2 bg-gray-200 border-2 rounded-md "
-    
-    <p class="text-lg text-white">Date: ${datetime}</p>
-    <p class="">City: ${data.city_name}</p>
-    <p class="">Country: ${data.country_code}</p>
-    <p class=""><i class="fas fa-temperature-high"></i>${temp}</p>
-    <p class=""><i class="fas fa-tint"></i>${rh} &#37</p>
+    <div class=" p-2 bg-gray-200 border-2 rounded-md"
+    <p class="text-lg text-white">Date: ${ob_time}</p>
+    <p class="">City: ${city_name}</p>
+    <p class="">Time Zone: ${timezone}</p>
+    <p class=""><i class="fas fa-sun text-4xl p-4"></i>${sunrise} a.m</p>
+    <p class=""><i class="fas fa-moon text-4xl p-4"></i>${sunset} p.m</p>
+    <p class=""><i class="fas fa-temperature-high text-4xl p-4"></i>${app_temp} &#8451</p>
+    <p class=""><i class="fas fa-tint text-4xl p-4"></i>${rh} &#37</p>
     <p class="">${weather.description}</p>
     <p class="">Min Temperature: ${wind_spd}</p>
     <div class=" mx-auto bg-white ">
@@ -125,7 +129,7 @@ export function showWeather(data) {
     <div/>
     `
   })
- 
+
 }
 
 
