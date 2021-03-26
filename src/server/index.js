@@ -29,8 +29,3 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-var textapi = new WeatherApi({
-    application_id: process.env.API_ID,
-    application_key: process.env.API_KEY
-});
