@@ -3,11 +3,6 @@ const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
 const paginacionDiv = document.querySelector('#paginacion');
 
-const recordsPerPage = 100;
-let totalPages;
-let iterador;
-let actualPage = 1;
-
 window.addEventListener('load', () => {
   formWeather.addEventListener('submit', validateForm);
 })
@@ -126,39 +121,20 @@ export function showWeather(data) {
     <div/>
     `
   })
-
 }
 
-
-// PixaBay call //
 export async function searchImage() {
-
   const search = document.querySelector('#description').value;
-
   const key = '18634593-15578008f57a9c24ca1d7ca87';
-  const PixaBayUrl = `https://pixabay.com/api/?key=${key}&q=${search}&per_page=${recordsPerPage}$page=${actualPage}`;
-
+  const PixaBayUrl = `https://pixabay.com/api/?key=${key}&q=${search}&per_page=4`;
   console.log(PixaBayUrl);
 
   fetch(PixaBayUrl)
     .then(response => response.json())
     .then(result => {
-      totalPages = calculatePages(result.totalHits);
       showImagenes(result.hits);
     })
 }
-
-// // Generator that records the number of items based on the pages
-// export function* createNewPages(total) {
-//   //console.log(total);
-//   for (let i = 1; i <= total; i++) {
-//     yield i;
-//   }
-// }
-
-// export function calculatePages(total) {
-//   return parseInt(Math.ceil(total / recordsPerPage));
-// }
 
 export function showImagenes(pictures) {
   console.log(pictures)
@@ -172,10 +148,9 @@ export function showImagenes(pictures) {
     result.innerHTML += `
      <div class=" w-64 mt-12 mb-4">
      <div class="bg-white mx-8">
-     <img class="w-full h-40 object-center" src="${previewURL}">
+     <img class="w-full h-80 object-center" src="${previewURL}">
      <div class="p-4">
-
-     <p class="imagenfont text-sm"> ${likes} <span> Likes </span> </p>
+     
      <p class="imagenfont text-sm"> ${tags} <span> Views </span> </p>
 
      <a class="imagenfont block w-full bg-blue-700 hover:bg-blue-600 text-white uppercase fontbold text-center text-xs rounded mt-5 p-1"
@@ -187,37 +162,9 @@ export function showImagenes(pictures) {
      <div/>
     `;
   });
-  // Clean previous result
-  while (paginacionDiv.firstChild) {
-    paginacionDiv.removeChild(paginacionDiv.firstChild)
-  }
-  // Generate new HTML
-  print();
+ 
 }
 
-// export function print() {
-//   iterador = createNewPages(totalPages);
-
-//   while (true) {
-//     const { value, done } = iterador.next();
-//     if (done) return;
-
-//     //caso contrario, generar un boton por cada elemento en el generador
-//     const boton = document.createElement('a');
-//     boton.href = '#';
-//     boton.dataset.pagina = value;
-//     boton.textContent = value;
-//     boton.classList.add('Next', 'bg-teal-800', 'text-white', 'text-xs', 'px-4', 'py-1', 'mr-2', 'mb-10', 'rounded');
-
-//     boton.onclick = () => {
-//       actualPage = value;
-
-//       searchImage();
-//     }
-
-//     paginacionDiv.appendChild(boton);
-//   }
-// }
 
 
 
