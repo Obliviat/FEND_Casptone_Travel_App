@@ -2,7 +2,7 @@ const resultWeather = document.querySelector('#resultWeather');
 const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
 const paginacionDiv = document.querySelector('#paginacion');
-const recordsPerPage = 5;
+const recordsPerPage = 100;
 let totalPages;
 let iterador;
 let actualPage = 1;
@@ -54,13 +54,14 @@ export function validateForm(e) {
   geoNamesAPI(city);
 
 }
-
+// http://api.geonames.org/postalCodeSearchJSON?postalcode=
+// http://api.geonames.org/searchJSON?q=
 // GeonameAPI call //
 export function geoNamesAPI(city) {
-  const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
+  const baseURLGeonames = 'http://api.geonames.org/postalCodeSearchJSON?postalcode=';
   const appKeyGeonames = `joanna`;
   const compleUrlGeo = baseURLGeonames + city + '&maxRows=10&username=' + appKeyGeonames
-  console.log(compleUrlGeo);
+  // console.log(compleUrlGeo);
 
   fetch(compleUrlGeo)
     .then(response => response.json())
@@ -72,8 +73,8 @@ export function geoNamesAPI(city) {
 
 // WeatherbitAPI call //
 export function ConsultApiWeather(data) {
-  const latitude = data.geonames[0].lat;
-  const longitude = data.geonames[0].lng;
+  const latitude = data.postalCodes[0].lat;
+  const longitude = data.postalCodes[0].lng;
   const weatherKey = 'b55790535efc444b9adc2f8c067f4aa6';
   const weatherUrl = `http://api.weatherbit.io/v2.0/forecast/daily?`;
 
@@ -102,22 +103,29 @@ export function showWeather(data) {
   }
 
   weather.forEach(pronostico => {
-    const { datetime, temp, max_temp, min_temp } = pronostico;
+    const { datetime, temp, weather, rh, wind_spd } = pronostico;
 
     resultWeather.innerHTML += `
-    <div class="h-40 p-2 bg-gray-200 border-2 rounded-md "
-    <div class"">
+    <div class=" p-2 bg-gray-200 border-2 rounded-md "
+    
+    <p class="text-lg text-white">Date: ${datetime}</p>
     <p class="">City: ${data.city_name}</p>
     <p class="">Country: ${data.country_code}</p>
-    <p class="text-lg text-white">Date: ${datetime}</p>
-    <p class="">Temperature: ${temp}</p>
-    <p class="">Max Temperature: ${ max_temp}</p>
-    <p class="">Min Temperature: ${min_temp}</p>
-    <div/>
+    <p class=""><i class="fas fa-temperature-high"></i>${temp}</p>
+    <p class=""><i class="fas fa-tint"></i>${rh} &#37</p>
+    <p class="">${weather.description}</p>
+    <p class="">Min Temperature: ${wind_spd}</p>
+    <div class=" mx-auto bg-white ">
+    <img src="../image/${weather.icon}" alt="hola">
+    </div>
+
+    <p class="">Min Temperature: ${weather.icon}</p>
+   
+    
     <div/>
     `
   })
-
+ 
 }
 
 
@@ -139,17 +147,17 @@ export async function searchImage() {
     })
 }
 
-// Generator that records the number of items based on the pages
-export function* createNewPages(total) {
-  //console.log(total);
-  for (let i = 1; i <= total; i++) {
-    yield i;
-  }
-}
+// // Generator that records the number of items based on the pages
+// export function* createNewPages(total) {
+//   //console.log(total);
+//   for (let i = 1; i <= total; i++) {
+//     yield i;
+//   }
+// }
 
-export function calculatePages(total) {
-  return parseInt(Math.ceil(total / recordsPerPage));
-}
+// export function calculatePages(total) {
+//   return parseInt(Math.ceil(total / recordsPerPage));
+// }
 
 export function showImagenes(pictures) {
   console.log(pictures)
@@ -186,29 +194,29 @@ export function showImagenes(pictures) {
   print();
 }
 
-export function print() {
-  iterador = createNewPages(totalPages);
+// export function print() {
+//   iterador = createNewPages(totalPages);
 
-  while (true) {
-    const { value, done } = iterador.next();
-    if (done) return;
+//   while (true) {
+//     const { value, done } = iterador.next();
+//     if (done) return;
 
-    //caso contrario, generar un boton por cada elemento en el generador
-    const boton = document.createElement('a');
-    boton.href = '#';
-    boton.dataset.pagina = value;
-    boton.textContent = value;
-    boton.classList.add('Next', 'bg-teal-800', 'text-white', 'text-xs', 'px-4', 'py-1', 'mr-2', 'mb-10', 'rounded');
+//     //caso contrario, generar un boton por cada elemento en el generador
+//     const boton = document.createElement('a');
+//     boton.href = '#';
+//     boton.dataset.pagina = value;
+//     boton.textContent = value;
+//     boton.classList.add('Next', 'bg-teal-800', 'text-white', 'text-xs', 'px-4', 'py-1', 'mr-2', 'mb-10', 'rounded');
 
-    boton.onclick = () => {
-      actualPage = value;
+//     boton.onclick = () => {
+//       actualPage = value;
 
-      searchImage();
-    }
+//       searchImage();
+//     }
 
-    paginacionDiv.appendChild(boton);
-  }
-}
+//     paginacionDiv.appendChild(boton);
+//   }
+// }
 
 
 
