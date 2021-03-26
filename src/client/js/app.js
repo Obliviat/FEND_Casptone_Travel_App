@@ -146,9 +146,9 @@ export function showImagenes(pictures) {
   pictures.forEach(imagen => {
     const { previewURL, likes, tags, largeImageURL } = imagen;
     result.innerHTML += `
-     <div class=" w-64 mt-12 mb-4">
-     <div class="bg-white mx-8">
-     <img class="w-full h-80 object-center" src="${previewURL}">
+     <div class="bg-gray-100 w-80 mt-12 mb-4">
+     <div class="mx-8">
+     <img class="w-full text-center p-4" src="${previewURL}">
      <div class="p-4">
      
      <p class="imagenfont text-sm"> ${tags} <span> Views </span> </p>
