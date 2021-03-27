@@ -1,7 +1,7 @@
 const resultWeather = document.querySelector('#resultWeather');
 const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
-const paginacionDiv = document.querySelector('#paginacion');
+
 
 window.addEventListener('load', () => {
   formWeather.addEventListener('submit', validateForm);
@@ -146,9 +146,9 @@ export function showImagenes(pictures) {
   pictures.forEach(imagen => {
     const { previewURL, likes, tags, largeImageURL } = imagen;
     result.innerHTML += `
-     <div class="bg-gray-100 w-80 mt-12 mb-4">
+     <div class="bg-gray-100 w-80 my-4 rounded">
      <div class="mx-8">
-     <img class="w-full text-center p-4" src="${previewURL}">
+     <img class="w-full text-center pt-8" src="${previewURL}">
      <div class="p-4">
      
      <p class="imagenfont text-sm"> ${tags} <span> Views </span> </p>
@@ -162,7 +162,7 @@ export function showImagenes(pictures) {
      <div/>
     `;
   });
- 
+
 }
 
 
