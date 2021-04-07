@@ -5,9 +5,14 @@ const alldata = {};
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 //creating the server using express
 const app = express();
+
+app.use(cors());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
 //tell the server what folder to use
@@ -23,9 +28,3 @@ app.listen(8080, function () {
     console.log('Example app listening on port 8080!')
 });
 
-app.use(cors());
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
