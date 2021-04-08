@@ -1,30 +1,51 @@
 //Creatin the improvised database to handle the informations we got
-const alldata = {};
+projectData = {};
 
 //Requiring express and other modules we need
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-//creating the server using express
+// Start up an instance of app
 const app = express();
-
+/* Middleware*/
+const bodyParser = require('body-parser');
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// Cors for cross origin allowance
+const cors = require('cors');
 app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
 
-
-//tell the server what folder to use
-app.use(express.static('dist'));
-
-//get request to rout and send index.html file inside dist
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
 });
 
-// designates what port the app will listen to for incoming requests
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
+//tell the server what folder to use
+app.use(express.static('dist'));
+
+// Setup Server
+const port = 8080;
+const server = app.listen(port, listening);
+function listening() {
+    console.log('server running');
+    console.log(`running on http://localhost:${port}`);
+}
+
+// Get Route that uses the url /all
+app.get('/all', sendData);
+function sendData(req, res) {
+    console.log(req);
+    res.send(projectData);
+};
+
+// POST method route
+app.post('/addData', (req, res) => {
+    const newEntry = {
+        date: req.body.date,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        content: req.body.content,
+    };
+    Object.assign(projectData, newEntry);
 });
+
 

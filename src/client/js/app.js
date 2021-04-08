@@ -1,7 +1,12 @@
+// Create a new date instance dynamically with JS
+let d = new Date();
 const resultWeather = document.querySelector('#resultWeather');
 const formWeather = document.querySelector('#formWeather');
 const result = document.querySelector('#result');
 
+const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
+const appKeyGeonames = `joanna`;
+const complementUrl = `&maxRows=1&username=`;
 
 window.addEventListener('load', () => {
   formWeather.addEventListener('submit', validateForm);
@@ -37,15 +42,75 @@ export function validateForm(e) {
   const firstDay = document.querySelector('#leaving').value;
   const lastDay = document.querySelector('#returning').value;
   const search = document.querySelector('#description').value;
-  //console.log(city);
+  console.log(city, "place");
   if (city === '' || firstDay === '' || lastDay === '' || search === '') {
     //Error
     showAlert('Fill out all the fields');
     return;
   }
   //Consult API
-  searchImage();
+  development(e);
   geoNamesAPI(city);
+  searchImage();
+}
+
+export function development(e) {
+  e.preventDefault();
+  const newCity = document.querySelector('#city').value;
+  const search = document.querySelector('#description').value;
+  searchInformation(baseURLGeonames, newCity, complementUrl, appKeyGeonames)
+    .then(function (data) {
+      postData('/addData', { date: d, city: data.geonames[0].toponymName, state: data.geonames[0].adminName1, country: data.geonames[0].countryName, content: search });
+    })
+    .then(function () {
+      updateUI();
+    })
+}
+
+//Get request
+const searchInformation = async (baseURLGeonames, city, complementUrl, appKeyGeonames) => {
+  const res = await fetch(baseURLGeonames + city + complementUrl + appKeyGeonames)
+  try {
+    // Transform into JSON
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    console.log("error", e);
+  }
+}
+
+// POST function to server
+const postData = async (url = '', data = {}) => {
+  console.log(data, "What");
+  const res = await fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    }, body: JSON.stringify(data),
+  });
+  try {
+    const newData = await res.json();
+    return newData;
+  } catch (e) {
+    console.log('error', e);
+  }
+}
+
+//update UI
+const updateUI = async () => {
+  const request = await fetch('/all')
+  try {
+    const allData = await request.json()
+    console.log(allData, "allData");
+    document.getElementById('date').innerHTML = "date: " + allData.date;
+    document.getElementById('city').innerHTML = "city: " + allData.toponymName;
+    document.getElementById('state').innerHTML = "state: " + allData.adminName1;
+    document.getElementById('country').innerHTML = "country: " + allData.countryName;
+    document.getElementById('content').innerHTML = "Content: " + allData.content;
+  } catch (e) {
+    console.log("error", e);
+  }
 }
 
 // GeonameAPI call //
@@ -53,7 +118,7 @@ export function geoNamesAPI(city) {
   const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
   const appKeyGeonames = `joanna`;
   const compleUrlGeo = baseURLGeonames + city + '&maxRows=1&username=' + appKeyGeonames
-  // console.log(compleUrlGeo);
+  console.log(compleUrlGeo, "urlGeo");
   fetch(compleUrlGeo)
     .then(response => response.json())
     .then(data => {
