@@ -1,5 +1,5 @@
 // Create a new date instance dynamically with JS
-let d = newDate();
+let d = new Date();
 let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 //Global Variables//
 const formWeather = document.querySelector('#formWeather');
@@ -76,7 +76,7 @@ const searchInformation = async (baseURLGeonames, city, complementUrl, appKeyGeo
   try {
     // Transform into JSON
     const data = await res.json();
-    console.log(data, "esta");
+    console.log(data, "request");
     return data;
   } catch (e) {
     console.log("error", e);
@@ -85,7 +85,7 @@ const searchInformation = async (baseURLGeonames, city, complementUrl, appKeyGeo
 
 // POST function to server
 const postData = async (url = '', data = {}) => {
-  console.log(data, "What");
+  console.log(data, "Post");
   const res = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
@@ -106,9 +106,8 @@ const updateUI = async () => {
   const request = await fetch('/all')
   try {
     const allData = await request.json()
-    console.log(allData, "allData");
+    console.log(allData.city, "allData");
     document.getElementById('date').innerHTML = "Date: " + allData.date;
-    document.getElementById('city').innerHTML = "City: " + allData.city;
     document.getElementById('state').innerHTML = "State: " + allData.state;
     document.getElementById('country').innerHTML = "Country: " + allData.country;
     document.getElementById('content').innerHTML = "Content: " + allData.content;
@@ -154,14 +153,12 @@ export function showWeather(data) {
     resultWeather.removeChild(resultWeather.firstChild);
   }
   weather.forEach(pronostico => {
-    const { ob_time, city_name, timezone, sunrise, sunset, temp, weather, rh } = pronostico;
+    const { city_name, sunrise, sunset, temp, weather, rh } = pronostico;
     const Fahrenheit = temp + 32.00;
     resultWeather.innerHTML += `
     <div class=" p-2 mx-auto bg-gray-200 border-2 rounded-md">
    
-    <p class="pl-4 text-lg align-baseline">Date: ${ob_time}</p>
     <p class="pl-4 text-lg align-baseline">City: ${city_name}</p>
-    <p class="pl-4 text-lg align-baseline">Time Zone: ${timezone}</p>
     <p class="pl-4 text-lg align-baseline">${weather.description}</p>
 
     <div class="grid gap-4 grid-cols-2 py-4">
@@ -191,6 +188,7 @@ export function showWeather(data) {
     `
   })
 }
+
 
 export async function searchImage() {
   const search = document.querySelector('#description').value;
