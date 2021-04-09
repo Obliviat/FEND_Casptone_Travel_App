@@ -1,7 +1,10 @@
 // Create a new date instance dynamically with JS
-let d = new Date();
-const resultWeather = document.querySelector('#resultWeather');
+let d = newDate();
+let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+//Global Variables//
 const formWeather = document.querySelector('#formWeather');
+const resultEntry = document.querySelector('#resultWeather');
+const resultWeather = document.querySelector('#resultWeather');
 const result = document.querySelector('#result');
 
 const baseURLGeonames = 'http://api.geonames.org/searchJSON?q=';
@@ -73,6 +76,7 @@ const searchInformation = async (baseURLGeonames, city, complementUrl, appKeyGeo
   try {
     // Transform into JSON
     const data = await res.json();
+    console.log(data, "esta");
     return data;
   } catch (e) {
     console.log("error", e);
@@ -103,10 +107,10 @@ const updateUI = async () => {
   try {
     const allData = await request.json()
     console.log(allData, "allData");
-    document.getElementById('date').innerHTML = "date: " + allData.date;
-    document.getElementById('city').innerHTML = "city: " + allData.toponymName;
-    document.getElementById('state').innerHTML = "state: " + allData.adminName1;
-    document.getElementById('country').innerHTML = "country: " + allData.countryName;
+    document.getElementById('date').innerHTML = "Date: " + allData.date;
+    document.getElementById('city').innerHTML = "City: " + allData.city;
+    document.getElementById('state').innerHTML = "State: " + allData.state;
+    document.getElementById('country').innerHTML = "Country: " + allData.country;
     document.getElementById('content').innerHTML = "Content: " + allData.content;
   } catch (e) {
     console.log("error", e);
@@ -123,12 +127,12 @@ export function geoNamesAPI(city) {
     .then(response => response.json())
     .then(data => {
       console.log(data, "geonames")
-      ConsultApiWeather(data)
+      consultApiWeather(data)
     })
 }
 
 // WeatherbitAPI call //
-export function ConsultApiWeather(data) {
+export function consultApiWeather(data) {
   const latitude = data.geonames[0].lat;
   const longitude = data.geonames[0].lng;
   const weatherKey = 'b55790535efc444b9adc2f8c067f4aa6';
