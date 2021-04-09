@@ -41,7 +41,6 @@ function sendData(req, res) {
 app.post('/addData', (req, res) => {
     const newEntry = {
         date: req.body.date,
-        city: req.body.city,
         state: req.body.state,
         country: req.body.country,
         content: req.body.content,
