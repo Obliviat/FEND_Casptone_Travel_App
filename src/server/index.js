@@ -5,14 +5,6 @@ projectData = {};
 const express = require('express');
 // Start up an instance of app
 const app = express();
-app.get('/', function (req, res) {
-    res.status(200).send('ok');
-});
-const server = app.listen(8080, function () {
-    const port = server.address().port;
-    console.log('example app listening at port %s', port);
-});
-module.exports = server;
 
 /* Middleware*/
 const bodyParser = require('body-parser');
@@ -29,6 +21,11 @@ app.get('/', function (req, res) {
 
 //tell the server what folder to use
 app.use(express.static('dist'));
+
+// designates what port the app will listen to for incoming requests
+app.listen(8080, function () {
+    console.log('Example app listening on port 8080!')
+})
 
 // Get Route that uses the url /all
 app.get('/all', sendData);
