@@ -4,7 +4,6 @@ test('geoNamesAPI shoud be a function', () => {
   expect(typeof geoNamesAPI).toBe('function');
 });
 
-
 test('weatherbitAPI shoud be a function', () => {
   expect(typeof consultApiWeather).toBe('function');
 });
